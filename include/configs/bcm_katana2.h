@@ -16,13 +16,9 @@
 #define CONFIG_PHYS_SDRAM_0				0x1b000000  /* SRAM */
 #define CONFIG_PHYS_SDRAM_1				0x60000000
 
-#if 1
 #define CONFIG_PHYS_SDRAM_1_SIZE		0x80000000 /* 2GB */
 #define ENDURO3_SVK_SDRAM_SIZE	        0x80000000 /* 2GB */
-#else
-#define CONFIG_PHYS_SDRAM_1_SIZE		0xFFFFFFFF /* 4GB */
-#define ENDURO3_SVK_SDRAM_SIZE	        0xFFFFFFFF /* 4GB */
-#endif
+
 #define CONFIG_PHYS_SDRAM_RSVD_SIZE     0x0 /* bytes reserved from CONFIG_PHYS_SDRAM_1 for custom use */
 #define CONFIG_SYS_SDRAM_BASE           (CONFIG_PHYS_SDRAM_1 + CONFIG_PHYS_SDRAM_RSVD_SIZE)
 
