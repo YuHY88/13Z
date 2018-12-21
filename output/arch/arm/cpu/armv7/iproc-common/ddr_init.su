@@ -1,0 +1,11 @@
+ddr_init.c:1410:27:validate_flash_shmoo_values	40	static
+ddr_init.c:234:10:iproc_get_ddr3_clock_mhz	24	static
+ddr_init.c:279:10:change_ddr_clock	8	static
+ddr_init.c:373:6:dump_phy_regs	0	static
+ddr_init.c:392:6:ddr_init_regs	0	static
+ddr_init.c:409:6:ddr_phy_ctl_regs_ovrd	0	static
+ddr_init.c:429:6:ddr_phy_wl_regs_ovrd	8	static
+ddr_init.c:525:5:is_ddr_32bit	0	static
+ddr_init.c:543:6:ddr_init	24	static
+ddr_init.c:1603:6:iproc_save_shmoo_values	40	static
+ddr_init.c:1782:6:ddr_init2	48	static

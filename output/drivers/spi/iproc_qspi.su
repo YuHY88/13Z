@@ -1,0 +1,12 @@
+iproc_qspi.c:304:1:bspi_flush_prefetch_buffers	0	static
+iproc_qspi.c:419:1:bspi_set_4byte_mode	0	static
+iproc_qspi.c:522:1:bspi_emulate_flash_read	32	static
+iproc_qspi.c:168:1:spi_cs_is_valid	0	static
+iproc_qspi.c:177:1:spi_cs_activate	0	static
+iproc_qspi.c:183:1:spi_cs_deactivate	0	static
+iproc_qspi.c:189:1:spi_init	0	static
+iproc_qspi.c:195:1:spi_setup_slave	24	static
+iproc_qspi.c:293:1:spi_free_slave	0	static
+iproc_qspi.c:364:1:spi_claim_bus	16	static
+iproc_qspi.c:389:1:spi_release_bus	16	static
+iproc_qspi.c:728:1:spi_xfer	48	static

@@ -1,0 +1,8 @@
+bcm-xgs-eth-serdes.c:37:1:serdes_set_blk	16	static
+bcm-xgs-eth-serdes.c:70:1:serdes_wr_reg	16	static
+bcm-xgs-eth-serdes.c:113:1:serdes_rd_reg	16	static
+bcm-xgs-eth-serdes.c:161:1:serdes_get_id	0	static
+bcm-xgs-eth-serdes.c:171:1:serdes_reset	8	static
+bcm-xgs-eth-serdes.c:191:1:serdes_reset_core	8	static
+bcm-xgs-eth-serdes.c:247:1:serdes_start_pll	8	static
+bcm-xgs-eth-serdes.c:288:1:serdes_init	16	static

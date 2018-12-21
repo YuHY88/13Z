@@ -1,0 +1,4 @@
+shmoo_sig.c:26:6:shmoo_mem2sig	16	static
+shmoo_sig.c:35:6:shmoo_sig2mem	16	static
+shmoo_sig.c:48:5:shmoo_sigmemcmp	24	static
+shmoo_sig.c:62:6:shmoo_dump_sig	32	static

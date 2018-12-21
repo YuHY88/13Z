@@ -1,0 +1,5 @@
+board.c:29:5:board_init	8	static
+board.c:40:5:dram_init	8	static
+board.c:64:5:board_early_init_f	8	static
+board.c:72:5:board_late_init	8	static
+board.c:99:5:board_eth_init	8	static

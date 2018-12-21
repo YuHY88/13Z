@@ -1,0 +1,1 @@
+cmd_arch/arm/cpu/armv7/iproc-common/shmoo2/built-in.o :=  /opt/arm/usr/bin/arm-linux-ld.bfd     -r -o arch/arm/cpu/armv7/iproc-common/shmoo2/built-in.o arch/arm/cpu/armv7/iproc-common/shmoo2/shmoo_ddr40.o 

@@ -1,0 +1,1 @@
+cmd_drivers/net/built-in.o :=  /opt/arm/usr/bin/arm-linux-ld.bfd     -r -o drivers/net/built-in.o drivers/net/bcm-xgs-eth.o drivers/net/bcm-xgs-eth-gmac.o drivers/net/bcm-xgs-eth-miim.o drivers/net/bcm-xgs-eth-serdes.o 

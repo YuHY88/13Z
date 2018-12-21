@@ -1,0 +1,6 @@
+bcm-xgs-eth.c:159:12:bcm_xgs_eth_open	16	static
+bcm-xgs-eth.c:200:13:bcm_xgs_eth_close	16	static
+bcm-xgs-eth.c:148:12:bcm_xgs_eth_write_hwaddr	32	static
+bcm-xgs-eth.c:111:12:bcm_xgs_eth_receive	24	static
+bcm-xgs-eth.c:80:12:bcm_xgs_eth_send	32	static
+bcm-xgs-eth.c:212:5:bcm_xgs_eth_register	24	static

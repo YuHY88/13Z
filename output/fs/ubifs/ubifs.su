@@ -1,0 +1,15 @@
+ubifs.c:488:22:ubifs_findfile	520	static
+ubifs.c:220:19:compr_init	32	static
+ubifs.c:42:12:gzip_decompress	16	static
+ubifs.c:92:7:kmemdup	16	static
+ubifs.c:176:5:ubifs_decompress	24	static
+ubifs.c:695:12:read_block	56	static
+ubifs.c:249:12:ubifs_compressors_init	8	static
+ubifs.c:575:5:ubifs_set_blk_dev	8	static
+ubifs.c:594:5:ubifs_ls	144	static
+ubifs.c:642:5:ubifs_exists	16	static
+ubifs.c:654:5:ubifs_size	24	static
+ubifs.c:853:5:ubifs_read	64	static
+ubifs.c:941:6:ubifs_close	0	static
+ubifs.c:946:5:ubifs_load	40	static
+ubifs.c:962:6:uboot_ubifs_umount	8	static

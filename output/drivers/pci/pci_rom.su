@@ -1,0 +1,6 @@
+pci_rom.c:36:13:board_should_run_oprom	0	static
+pci_rom.c:51:17:board_map_oprom_vendev	0	static
+pci_rom.c:134:5:pci_rom_load	24	static
+pci_rom.c:184:5:vbe_get_video_info	0	static
+pci_rom.c:225:6:setup_video	12	static
+pci_rom.c:254:5:pci_run_vga_bios	40	static

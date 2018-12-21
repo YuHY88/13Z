@@ -1,0 +1,3 @@
+ehci-iproc.c:114:5:linux_usbh_init	24	static
+ehci-iproc.c:323:5:ehci_hcd_init	24	static
+ehci-iproc.c:450:5:ehci_hcd_stop	0	static

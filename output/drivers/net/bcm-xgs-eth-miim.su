@@ -1,0 +1,2 @@
+bcm-xgs-eth-miim.c:263:1:chip_phy_wr	40	static
+bcm-xgs-eth-miim.c:311:1:chip_phy_rd	32	static

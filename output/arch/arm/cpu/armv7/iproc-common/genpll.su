@@ -1,0 +1,5 @@
+genpll.c:147:10:iproc_get_axi_clk	0	static
+genpll.c:179:10:iproc_get_uart_clk	8	static
+genpll.c:210:10:iproc_get_periph_clk	0	static
+genpll.c:218:10:iproc_get_apb_clk	0	static
+genpll.c:226:6:iproc_clk_enum	32	static
