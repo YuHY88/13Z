@@ -1,7 +1,10 @@
-cmd_ubi.c:195:27:ubi_find_volume	24	static
-cmd_ubi.c:264:12:ubi_volume_continue_write	24	static
-cmd_ubi.c:299:5:ubi_volume_begin_write	24	static
-cmd_ubi.c:325:5:ubi_volume_write	0	static
-cmd_ubi.c:330:5:ubi_volume_read	56	static
-cmd_ubi.c:446:5:ubi_part	184	static
-cmd_ubi.c:512:12:do_ubi	200	static
+cmd_ubi.c:196:27:ubi_find_volume	24	static
+cmd_ubi.c:265:12:ubi_volume_continue_write	24	static
+cmd_ubi.c:300:5:ubi_volume_begin_write	24	static
+cmd_ubi.c:326:5:ubi_volume_write	0	static
+cmd_ubi.c:331:5:ubi_volume_read	56	static
+cmd_ubi.c:460:15:nand_read_mtd	2096	static
+cmd_ubi.c:510:15:sflash_write_version	80	static
+cmd_ubi.c:593:6:active_kernel1	72	static
+cmd_ubi.c:634:5:ubi_part	184	static
+cmd_ubi.c:700:12:do_ubi	200	static

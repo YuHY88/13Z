@@ -23,6 +23,7 @@
 #include <ubi_uboot.h>
 #include <asm/errno.h>
 #include <jffs2/load_kernel.h>
+#include "version.h"
 
 #undef ubi_msg
 #define ubi_msg(fmt, ...) printf("UBI: " fmt "\n", ##__VA_ARGS__)

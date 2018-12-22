@@ -7,6 +7,7 @@ deps_common/cmd_mtdparts.o := \
     $(wildcard include/config/cmd/onenand.h) \
     $(wildcard include/config/cmd/mtdparts/show/net/sizes.h) \
     $(wildcard include/config/cmd/mtdparts/spread.h) \
+    $(wildcard include/config/pdt/env/size.h) \
     $(wildcard include/config/sys/longhelp.h) \
   ../include/common.h \
     $(wildcard include/config/pci.h) \

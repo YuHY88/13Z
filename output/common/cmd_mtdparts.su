@@ -16,5 +16,5 @@ cmd_mtdparts.c:821:12:device_parse	96	static
 cmd_mtdparts.c:1032:5:mtd_id_parse	32	static
 cmd_mtdparts.c:1337:5:find_dev_and_part	48	static
 cmd_mtdparts.c:1697:5:mtdparts_init	1104	static
-cmd_mtdparts.c:1931:12:do_mtdparts	128	static
+cmd_mtdparts.c:1941:12:do_mtdparts	128	static
 cmd_mtdparts.c:1893:12:do_chpart	32	static
