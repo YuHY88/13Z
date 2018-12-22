@@ -312,6 +312,11 @@ static int on_dnsip(const char *name, const char *value, enum env_op op,
 U_BOOT_ENV_CALLBACK(dnsip, on_dnsip);
 #endif
 
+
+extern int do_spi_flash(cmd_tbl_t *cmdtp, int flag, int argc,
+			char * const argv[]);
+extern char tftp_filename[128];
+
 /*
  * Check if autoload is enabled. If so, use either NFS or TFTP to download
  * the boot file.
@@ -616,6 +621,28 @@ restart:
 				       net_boot_file_size, net_boot_file_size);
 				setenv_hex("filesize", net_boot_file_size);
 				setenv_hex("fileaddr", load_addr);
+			/**********added by yu20181222***********************/			
+			if(strncmp(tftp_filename, "ht8000-13z_main_uboot", 16) == 0)
+			{
+				char *argv1[12];
+				argv1[0] = "sf";
+				argv1[1] = "probe";
+				argv1[2] = "0";
+				ret = do_spi_flash(NULL, 0, 3, argv1);
+				argv1[0] = "sf";
+				argv1[1] = "erase";
+				argv1[2] = "0x0";
+				argv1[3] = "0x100000";
+				ret = do_spi_flash(NULL, 0, 4, argv1);
+				argv1[0] = "sf";
+				argv1[1] = "write";
+				argv1[2] = "0x61000000";
+				argv1[3] = "0x0";
+				argv1[4] = "0x100000";
+			
+				ret = do_spi_flash(NULL, 0, 5, argv1);
+			}
+			/*******************end******************************/	
 			}
 			if (protocol != NETCONS)
 				eth_halt();

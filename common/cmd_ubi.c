@@ -443,6 +443,193 @@ static int ubi_dev_scan(struct mtd_info *info, char *ubidev,
 	return 0;
 }
 
+#if 1  /*add by zhangjj 2018.12.22 for two kernel*/
+
+#define RAM_TMP_ADDR				0x60000000
+#define RAM_TMP_ADDR_STRING			"0x60000000"
+#define PARTITION_ITABLE_STRING		"0x04000000"
+#define TWO_PAGES_SIZE_STRING		"0x1000"
+#define BOOT_PARA_PAGE_OFFSET		0x800
+#define A_BLOCK_SIZE_STRING			"0x20000"
+
+extern int do_ubifs_load(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[]);
+extern int do_ubifs_mount(cmd_tbl_t *cmdtp, int flag, int argc, char *argv[]); 
+extern int do_nand(cmd_tbl_t * cmdtp, int flag, int argc, char *argv[]);
+
+unsigned char nand_read_mtd(void)
+{
+	int i,ret;
+	unsigned char data_buf[2048]={0};
+	unsigned char bootflag=0,bootflag1=0,imageflag=0,imageflag1=0,activeflag=0,activeflag1=0;
+	unsigned char mtd_flag;
+	char *argv1[10]={0};
+//      rc = eeprom_read (0xa9,off,data_buf,CONFIG_PDT_ENV_SIZE);
+	argv1[0] = "nand";
+	argv1[1] = "read";
+	argv1[2] = RAM_TMP_ADDR_STRING;
+	argv1[3] = PARTITION_ITABLE_STRING;
+	argv1[4] = TWO_PAGES_SIZE_STRING;
+	argv1[5] = NULL;
+	ret = do_nand(NULL, 0, 5, argv1);
+	for(i=0;i<2048;i++)
+			data_buf[i] = *((unsigned char *)RAM_TMP_ADDR + i);
+				
+	if(0xaa==data_buf[0] && 0x55==data_buf[1] && 0xcc==data_buf[2] && 0x77==data_buf[3])
+    {    
+		bootflag = 1;
+    }   
+
+	if(0xaa==data_buf[64] && 0x55==data_buf[65] && 0xcc==data_buf[66] && 0x77==data_buf[67])
+    {
+		bootflag1 = 1;
+    }
+
+	if(0xaa==data_buf[4] && 0x55==data_buf[5] && 0xcc==data_buf[6] && 0x77==data_buf[7])
+	{
+		imageflag = 1;
+	}	
+
+	if(0xaa==data_buf[68] && 0x55==data_buf[69] && 0xcc==data_buf[70] && 0x77==data_buf[71])
+	{
+		imageflag1 = 1;
+	}        
+	if(0xcc==data_buf[8] && 0x77==data_buf[9] && 0xaa==data_buf[10] && 0x55==data_buf[11])
+	{     
+		activeflag = 1;
+	}
+	if(0xcc==data_buf[72] && 0x77==data_buf[73] && 0xaa==data_buf[74] && 0x55==data_buf[75])
+	{
+		activeflag1 = 1;
+	}
+	mtd_flag = (activeflag1<<5)|(activeflag<<4)|(imageflag1<<3)|(imageflag<<2)|(bootflag1<<1)|bootflag;
+	return mtd_flag;
+	
+}
+
+unsigned char sflash_write_version(void)
+{
+	int i,ret;
+	unsigned char data_buf[2048]={0};
+	unsigned char ver_flag=0;
+	char *argv1[10]={0};
+	char uboot_ver[23] = U_BOOT_VERSION;
+//      rc = eeprom_read (0xa9,off,data_buf,CONFIG_PDT_ENV_SIZE);
+	argv1[0] = "nand";
+	argv1[1] = "read";
+	argv1[2] = RAM_TMP_ADDR_STRING;
+	argv1[3] = PARTITION_ITABLE_STRING;
+	argv1[4] = TWO_PAGES_SIZE_STRING;
+	argv1[5] = NULL;
+	ret = do_nand(NULL, 0, 5, argv1);
+
+	for(i=0;i<8;i++)
+	{
+		if(*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x14) + i) != uboot_ver[7+i])
+			ver_flag += 1;
+	}
+	if(0xAA != *((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET)))
+	{
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x0)) = 0xAA;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x1)) = 0x55;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x2)) = 0xCC;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x3)) = 0x77;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x4)) = 0xAA;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x5)) = 0x55;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x6)) = 0xCC;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x7)) = 0x77;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x8)) = 0xCC;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x9)) = 0x77;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0xa)) = 0xAA;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0xb)) = 0x55;
+		if(ver_flag == 0)
+		{
+			argv1[0] = "nand";
+			argv1[1] = "erase";
+			argv1[2] = PARTITION_ITABLE_STRING;
+			argv1[3] = A_BLOCK_SIZE_STRING;
+			argv1[4] = NULL;
+			ret = do_nand(NULL, 0, 4, argv1);
+			argv1[0] = "nand";
+			argv1[1] = "write";
+			argv1[2] = RAM_TMP_ADDR_STRING;
+			argv1[3] = PARTITION_ITABLE_STRING;
+			argv1[4] = TWO_PAGES_SIZE_STRING;
+			argv1[5] = NULL;
+			ret = do_nand(NULL, 0, 5, argv1);
+		}
+	}
+	if(ver_flag > 0)
+	{
+		printf("Updating uboot version!!!\n");
+		for(i=0;i<8;i++)
+			*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x14) + i) = uboot_ver[7+i];
+	//	for(i=0;i<8;i++)
+	//		*((unsigned char *)0x85000010 + i) = 0xff;	
+	//		写分区大小
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x10)) = 0x00;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x11)) = 0x10;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x12)) = 0x00;
+		*((unsigned char *)(RAM_TMP_ADDR+BOOT_PARA_PAGE_OFFSET+0x13)) = 0x00;
+		argv1[0] = "nand";
+		argv1[1] = "erase";
+		argv1[2] = PARTITION_ITABLE_STRING;
+		argv1[3] = A_BLOCK_SIZE_STRING;
+		argv1[4] = NULL;
+		ret = do_nand(NULL, 0, 4, argv1);
+		argv1[0] = "nand";
+		argv1[1] = "write";
+		argv1[2] = RAM_TMP_ADDR_STRING;
+		argv1[3] = PARTITION_ITABLE_STRING;
+		argv1[4] = TWO_PAGES_SIZE_STRING;
+		argv1[5] = NULL;
+		ret = do_nand(NULL, 0, 5, argv1);
+	}
+
+	return 0;
+	
+}
+
+void active_kernel1(void)
+{
+	int i,ret;
+	unsigned char data_buf[2048]={0};
+	unsigned char ver_flag=0;
+	char *argv1[10]={0};
+
+	argv1[0] = "nand";
+	argv1[1] = "read";
+	argv1[2] = RAM_TMP_ADDR_STRING;
+	argv1[3] = PARTITION_ITABLE_STRING;
+	argv1[4] = TWO_PAGES_SIZE_STRING;
+	argv1[5] = NULL;
+	ret = do_nand(NULL, 0, 5, argv1);
+
+	if(0xCC != *((unsigned char *)(RAM_TMP_ADDR+0x8)))
+	{
+		argv1[0] = "nand";
+		argv1[1] = "erase";
+		argv1[2] = PARTITION_ITABLE_STRING;
+		argv1[3] = A_BLOCK_SIZE_STRING;
+		argv1[4] = NULL;
+		ret = do_nand(NULL, 0, 4, argv1);
+		*(unsigned char *)(RAM_TMP_ADDR+0x8) = 0xCC;
+		*(unsigned char *)(RAM_TMP_ADDR+0x9) = 0x77;
+		*(unsigned char *)(RAM_TMP_ADDR+0xa) = 0xAA;
+		*(unsigned char *)(RAM_TMP_ADDR+0xb) = 0x55;
+		argv1[0] = "nand";
+		argv1[1] = "write";
+		argv1[2] = RAM_TMP_ADDR_STRING;
+		argv1[3] = PARTITION_ITABLE_STRING;
+		argv1[4] = TWO_PAGES_SIZE_STRING;
+		argv1[5] = NULL;
+		ret = do_nand(NULL, 0, 5, argv1);
+
+	}
+	
+}
+
+#endif
+
 int ubi_part(char *part_name, const char *vid_header_offset)
 {
 	int err = 0;

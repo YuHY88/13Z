@@ -264,7 +264,7 @@
 	"format=mtdparts delall;mtdparts default;saveenv;nand erase.part kernel1;ubi part kernel1 4096;ubi create kernel1;ubi info 1;nand erase.part kernel2;\
 	ubi part kernel2 4096;ubi create kernel2;ubi info 1;nand erase.part application;ubi part application 4096;ubi create home;ubi info 1;\
 	nand erase.part data;ubi part data 4096;ubi create data; ubi info 1\0" \
-	"dnu=tftpboot 0x61000000 u-boot.bin;sf probe 0;sf erase 0x0 0x100000;sf write 0x61000000 0x0 0x100000\0"\
+	"dnu=tftpboot 0x61000000 ht8000-13z_main_uboot\0"\
 	"filesize=0x8CF000\0"\
 	"rootfs_size=0x400000\0"\
 	"uImage_size=0x800000\0"\
